@@ -289,8 +289,8 @@ export default function Assessment() {
               <h2 className="text-2xl font-bold mb-2 text-center text-slate_blue-500">
                 Perceived Stress Scale
               </h2>
-              <p className="text-slate_blue-400 text-center mb-8 text-sm">Think about how you felt during the last month</p>
-              <p className="text-lg mb-8 text-neutral-700 dark:text-slate_blue-700 border-l-4 border-persian_pink-300 pl-4 py-2">
+              <p className="text-slate_blue-400 dark:text-slate_blue-200 text-center mb-8 text-sm">Think about how you felt during the last month</p>
+              <p className="text-lg mb-8 text-neutral-700 dark:text-white border-l-4 border-persian_pink-300 pl-4 py-2">
                 {questions[currentQuestion].text}
               </p>
 
@@ -302,8 +302,8 @@ export default function Assessment() {
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(option.value)}
                     className={`w-full py-4 px-5 rounded-lg text-left transition-all duration-300 ${answers[currentQuestion] === option.value 
-                      ? "border-2 border-persian_pink-400 bg-persian_pink-50 dark:bg-persian_pink-500/20 text-persian_pink-600 dark:text-persian_pink-300 font-medium shadow-md"
-                      : "border border-slate_blue-200 dark:border-slate_blue-500/30 hover:border-persian_pink-300 dark:hover:border-persian_pink-400 bg-white dark:bg-slate_blue-200/20 text-slate_blue-700 dark:text-slate_blue-200 shadow-sm"
+                      ? "border-2 border-persian_pink-400 bg-persian_pink-50 dark:bg-persian_pink-500/40 text-persian_pink-600 dark:text-persian_pink-100 font-medium shadow-md"
+                      : "border border-slate_blue-200 dark:border-white/30 hover:border-persian_pink-300 dark:hover:border-persian_pink-200 bg-white dark:bg-slate_blue-300/20 text-slate_blue-700 dark:text-white shadow-sm"
                     }`}
                   >
                     <div className="flex items-center">
@@ -400,20 +400,12 @@ export default function Assessment() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-                      className={`w-48 h-48 rounded-full flex items-center justify-center shadow-lg ${getScoreInterpretation(score || 0).bgColor}`}
+                      className="relative w-32 h-32 bg-slate_blue-900 rounded-full flex items-center justify-center shadow-lg"
                     >
-                      <div className="w-40 h-40 rounded-full bg-white dark:bg-slate_blue-100 flex items-center justify-center">
-                        <div className="text-center">
-                          <motion.div 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.6 }}
-                            className={`text-5xl font-bold ${getScoreInterpretation(score || 0).color}`}
-                          >
-                            {score}
-                          </motion.div>
-                          <div className="text-sm text-slate_blue-400">out of 40</div>
-                        </div>
+                      <div className="absolute inset-0 border-4 border-persian_pink-200 dark:border-persian_pink-300 rounded-full opacity-90"></div>
+                      <div className="text-center text-white">
+                        <div className="text-5xl font-bold">{score}</div>
+                        <div className="text-xs opacity-90">out of 40</div>
                       </div>
                     </motion.div>
                   </div>
@@ -427,13 +419,13 @@ export default function Assessment() {
                       {getScoreInterpretation(score || 0).level}
                     </h3>
                     
-                    <p className="text-slate_blue-600 dark:text-slate_blue-500 text-center mb-8 max-w-lg mx-auto">
+                    <p className="text-slate_blue-600 dark:text-slate_blue-100 text-center mb-8 max-w-lg mx-auto">
                       {getScoreInterpretation(score || 0).description}
                     </p>
                   </motion.div>
 
                   <div className="border-t border-slate_blue-100 dark:border-slate_blue-300/20 pt-6 mt-6">
-                    <h4 className="font-semibold mb-4 text-slate_blue-600">Personalized Recommendations:</h4>
+                    <h4 className="font-semibold mb-4 text-slate_blue-600 dark:text-white">Personalized Recommendations:</h4>
                     <ul className="space-y-3 mb-8">
                       {getScoreInterpretation(score || 0).recommendations.map((rec, index) => (
                         <motion.li 
@@ -441,7 +433,7 @@ export default function Assessment() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.6 + (index * 0.1) }}
-                          className="text-slate_blue-600 dark:text-slate_blue-500 flex items-start"
+                          className="text-slate_blue-600 dark:text-slate_blue-100 flex items-start"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-persian_pink-500 mr-3 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
