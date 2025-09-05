@@ -71,8 +71,8 @@ const getScoreInterpretation = (score: number) => {
     return {
       level: "Low Stress",
       description: "You're experiencing low levels of stress. Keep up your good coping strategies!",
-      color: "text-slate_blue-400",
-      bgColor: "bg-slate_blue-100",
+      color: "text-slate_blue-400 dark:text-slate_blue-300",
+      bgColor: "bg-slate_blue-100 dark:bg-slate_blue-600/30",
       recommendations: [
         "Continue with your current self-care practices",
         "Consider preventative strategies to maintain your wellbeing",
@@ -84,8 +84,8 @@ const getScoreInterpretation = (score: number) => {
     return {
       level: "Moderate Stress",
       description: "You're experiencing moderate levels of stress. Some additional coping strategies might help.",
-      color: "text-amethyst-500",
-      bgColor: "bg-amethyst-100",
+      color: "text-amethyst-500 dark:text-amethyst-300",
+      bgColor: "bg-amethyst-100 dark:bg-amethyst-600/30",
       recommendations: [
         "Try incorporating brief relaxation exercises into your daily routine",
         "Consider setting boundaries to protect your energy",
@@ -98,8 +98,8 @@ const getScoreInterpretation = (score: number) => {
     return {
       level: "High Stress",
       description: "You're experiencing high levels of stress. It's important to prioritize stress management.",
-      color: "text-persian_pink-500",
-      bgColor: "bg-persian_pink-100",
+      color: "text-persian_pink-500 dark:text-persian_pink-300",
+      bgColor: "bg-persian_pink-100 dark:bg-persian_pink-600/30",
       recommendations: [
         "Consider implementing daily stress reduction practices",
         "Evaluate your current commitments and consider where you might reduce load",
@@ -302,14 +302,14 @@ export default function Assessment() {
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(option.value)}
                     className={`w-full py-4 px-5 rounded-lg text-left transition-all duration-300 ${answers[currentQuestion] === option.value 
-                      ? "border-2 border-persian_pink-400 bg-persian_pink-50 dark:bg-persian_pink-100/10 text-persian_pink-600 font-medium shadow-md"
-                      : "border border-slate_blue-200 dark:border-slate_blue-300 hover:border-persian_pink-300 shadow-sm"
+                      ? "border-2 border-persian_pink-400 bg-persian_pink-50 dark:bg-persian_pink-500/20 text-persian_pink-600 dark:text-persian_pink-300 font-medium shadow-md"
+                      : "border border-slate_blue-200 dark:border-slate_blue-500/30 hover:border-persian_pink-300 dark:hover:border-persian_pink-400 bg-white dark:bg-slate_blue-200/20 text-slate_blue-700 dark:text-slate_blue-200 shadow-sm"
                     }`}
                   >
                     <div className="flex items-center">
                       <div className={`w-6 h-6 rounded-full mr-3 flex items-center justify-center ${answers[currentQuestion] === option.value 
-                        ? "bg-persian_pink-400 text-white" 
-                        : "bg-slate_blue-100 text-slate_blue-400"}
+                        ? "bg-persian_pink-400 dark:bg-persian_pink-500 text-white" 
+                        : "bg-slate_blue-100 dark:bg-slate_blue-400/30 text-slate_blue-400 dark:text-slate_blue-200"}
                       `}>
                         {option.value}
                       </div>
@@ -328,8 +328,8 @@ export default function Assessment() {
                 disabled={currentQuestion === 0}
                 className={`flex items-center py-3 px-6 rounded-full shadow transition-all duration-300 ${
                   currentQuestion === 0
-                    ? "bg-slate_blue-100 text-slate_blue-300 cursor-not-allowed"
-                    : "bg-white text-slate_blue-500 border border-slate_blue-300 hover:bg-slate_blue-50"
+                    ? "bg-slate_blue-100 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
+                    : "bg-white dark:bg-slate_blue-300 text-slate_blue-500 dark:text-slate_blue-100 border border-slate_blue-300 dark:border-slate_blue-400 hover:bg-slate_blue-50 dark:hover:bg-slate_blue-400"
                 }`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -345,7 +345,7 @@ export default function Assessment() {
                 disabled={answers[currentQuestion] === null}
                 className={`flex items-center py-3 px-6 rounded-full shadow transition-all duration-300 ${
                   answers[currentQuestion] === null
-                    ? "bg-slate_blue-100 text-slate_blue-300 cursor-not-allowed"
+                    ? "bg-slate_blue-100 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
                     : "bg-persian_pink-500 hover:bg-persian_pink-600 text-white"
                 }`}
               >
@@ -386,10 +386,10 @@ export default function Assessment() {
                 className="bg-white dark:bg-slate_blue-200 rounded-xl shadow-lg overflow-hidden"
               >
                 <div className={`${getScoreInterpretation(score || 0).bgColor} p-6 text-center`}>
-                  <h2 className="text-2xl font-bold mb-2 text-slate_blue-600 dark:text-slate_blue-800">
+                  <h2 className="text-2xl font-bold mb-2 text-slate_blue-600 dark:text-slate_blue-100">
                     Your Assessment Results
                   </h2>
-                  <p className="text-slate_blue-500 dark:text-slate_blue-700 text-sm">
+                  <p className="text-slate_blue-500 dark:text-slate_blue-300 text-sm">
                     Perceived Stress Scale Score
                   </p>
                 </div>
