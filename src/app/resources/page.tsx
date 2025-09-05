@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import Header from '@/components/Header';
 
 // Animation variants
 const fadeIn = {
@@ -237,40 +238,7 @@ export default function Resources() {
   return (
     <div className="min-h-screen bg-pale_purple-500 dark:bg-slate_blue-100 flex flex-col">
       {/* Header */}
-      <header className="py-4 px-6 bg-white dark:bg-slate_blue-200 shadow-sm">
-        <div className="container-custom flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="flex items-center space-x-2 transition-transform duration-300 group-hover:scale-105">
-              <Image src="/images/logo.png" alt="Thrive Tribe Logo" width={36} height={36} className="rounded-md" />
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-blend">Thrive Tribe</span>
-            </div>
-          </Link>
-          
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              Home
-            </Link>
-            <Link href="/about" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              About
-            </Link>
-            <Link href="/assessment" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              Assessment
-            </Link>
-            <Link href="/resources" className="text-persian_pink-500 font-medium">
-              Resources
-            </Link>
-          </nav>
-          
-          <div className="flex space-x-2">
-            <Link href="/login" className="py-2 px-4 rounded-full border border-slate_blue-400 text-slate_blue-400 hover:bg-slate_blue-50 transition-colors duration-300">
-              Log In
-            </Link>
-            <Link href="/signup" className="py-2 px-4 rounded-full bg-persian_pink-500 text-white hover:bg-persian_pink-400 transition-colors duration-300">
-              Sign Up
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 bg-gradient-purple text-white overflow-hidden">

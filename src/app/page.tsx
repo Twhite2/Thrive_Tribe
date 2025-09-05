@@ -3,82 +3,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import ThemeToggle from '@/components/ThemeToggle';
+import Header from '@/components/Header';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm dark:bg-slate_blue-200">
-        <div className="container-custom flex justify-between items-center py-4">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="flex items-center space-x-2 transition-transform duration-300 group-hover:scale-105">
-              <Image src="/images/logo.png" alt="Thrive Tribe Logo" width={40} height={40} className="rounded-md" />
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-blend">Thrive Tribe</span>
-            </div>
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6">
-            <Link href="/about" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              About
-            </Link>
-            <Link href="/assessment" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              Assessment
-            </Link>
-            <Link href="/resources" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              Resources
-            </Link>
-          </div>
-          
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button 
-              onClick={() => document.getElementById('mobile-menu')?.classList.toggle('hidden')}
-              className="text-slate_blue-400 hover:text-persian_pink-500"
-              aria-label="Toggle menu"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-3">
-            <ThemeToggle />
-            <Link href="/login" className="py-2 px-4 rounded-full border border-slate_blue-400 text-slate_blue-400 hover:bg-slate_blue-50 transition-colors duration-300">
-              Log In
-            </Link>
-            <Link href="/signup" className="py-2 px-4 rounded-full bg-persian_pink-500 text-white hover:bg-persian_pink-400 transition-colors duration-300">
-              Sign Up
-            </Link>
-          </div>
-        </div>
-        
-        {/* Mobile Menu */}
-        <div id="mobile-menu" className="hidden md:hidden bg-white dark:bg-slate_blue-200 py-4 px-6 shadow-inner border-t border-slate_blue-100 dark:border-slate_blue-300/30">
-          <div className="flex flex-col space-y-3">
-            <Link href="/about" className="py-2 text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              About
-            </Link>
-            <Link href="/assessment" className="py-2 text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              Assessment
-            </Link>
-            <Link href="/resources" className="py-2 text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
-              Resources
-            </Link>
-            <div className="flex space-x-3 pt-3 border-t border-slate_blue-100 dark:border-slate_blue-300/20">
-              <Link href="/login" className="flex-1 py-2 px-4 text-center rounded-full border border-slate_blue-400 text-slate_blue-400 hover:bg-slate_blue-50 transition-colors duration-300">
-                Log In
-              </Link>
-              <Link href="/signup" className="flex-1 py-2 px-4 text-center rounded-full bg-persian_pink-500 text-white hover:bg-persian_pink-400 transition-colors duration-300">
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       {/* Hero Section */}
       <section className="py-20 md:py-28 bg-gradient-purple text-white overflow-hidden relative">

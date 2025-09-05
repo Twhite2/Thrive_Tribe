@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Header from "@/components/Header";
 
 // Perceived Stress Scale questions
 const questions = [
@@ -186,21 +187,15 @@ export default function Assessment() {
 
   return (
     <div className="min-h-screen bg-pale_purple-500 dark:bg-slate_blue-100 flex flex-col">
-      <header className="py-4 px-6 bg-white dark:bg-slate_blue-200 shadow-sm">
-        <div className="container-custom flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="flex items-center space-x-2 transition-transform duration-300 group-hover:scale-105">
-              <Image src="/images/logo.png" alt="Thrive Tribe Logo" width={36} height={36} className="rounded-md" />
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-blend">Thrive Tribe</span>
-            </div>
-          </Link>
-          {!assessmentComplete && !showIntro && (
-            <div className="text-sm text-slate_blue-400 font-medium py-1 px-3 bg-slate_blue-50 rounded-full">
-              Question {currentQuestion + 1} of {questions.length}
-            </div>
-          )}
+      <Header showAuthButtons={false} />
+      
+      {!assessmentComplete && !showIntro && (
+        <div className="container-custom mt-4">
+          <div className="text-sm text-slate_blue-400 font-medium py-1 px-3 bg-slate_blue-50 dark:bg-slate_blue-700/30 rounded-full inline-block">
+            Question {currentQuestion + 1} of {questions.length}
+          </div>
         </div>
-      </header>
+      )}
 
       <main className="flex-grow flex flex-col items-center justify-center p-6 md:py-12">
         {showIntro ? (

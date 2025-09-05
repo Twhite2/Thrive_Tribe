@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
-import ThemeToggle from '@/components/ThemeToggle';
+import Header from '@/components/Header';
 
 // Mock data for user's assessment history
 const mockAssessmentHistory = [
@@ -136,43 +136,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-pale_purple-500 dark:bg-slate_blue-100">
       {/* Header */}
-      <header className="py-4 px-6 bg-white dark:bg-slate_blue-200 shadow-sm">
-        <div className="container-custom flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="flex items-center space-x-2 transition-transform duration-300 group-hover:scale-105">
-              <Image src="/images/logo.png" alt="Thrive Tribe Logo" width={36} height={36} className="rounded-md" />
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-blend">Thrive Tribe</span>
-            </div>
-          </Link>
-          
-          <div className="hidden md:flex space-x-6">
-            <Link href="/dashboard" className="text-persian_pink-500 font-medium">Dashboard</Link>
-            <Link href="/assessment" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">Assessment</Link>
-            <Link href="/resources" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">Resources</Link>
-            {isPremium && (
-              <Link href="/premium" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">Premium</Link>
-            )}
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
-            
-            {!isPremium && (
-              <Link href="/premium" className="hidden md:block text-sm px-3 py-1 rounded-full bg-persian_pink-100 text-persian_pink-500 font-medium hover:bg-persian_pink-200 transition-colors duration-300">
-                Upgrade
-              </Link>
-            )}
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-slate_blue-200 flex items-center justify-center text-slate_blue-600 font-medium">
-                {session?.user?.name?.[0] || 'U'}
-              </div>
-              <span className="text-sm font-medium text-slate_blue-600 hidden md:inline">
-                {session?.user?.name || 'User'}
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="container-custom py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
