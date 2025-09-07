@@ -48,8 +48,16 @@ export default function SignUp() {
           password,
         }),
       });
-
-      const data = await response.json();
+      
+      // Check if response is ok before attempting to parse JSON
+      let data;
+      try {
+        const text = await response.text(); // Get response as text first
+        data = text ? JSON.parse(text) : {}; // Parse if not empty
+      } catch (error) {
+        console.error("Error parsing response:", error);
+        throw new Error("Server returned an invalid response. Please try again.");
+      }
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to register");
