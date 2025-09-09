@@ -140,7 +140,7 @@ export default function SignUp() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} method="post">
             <div className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
