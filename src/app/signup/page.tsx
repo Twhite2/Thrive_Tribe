@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
+import { SiYahoo } from "react-icons/si";
 import { signIn } from "next-auth/react";
 
 export default function SignUp() {
@@ -83,6 +84,13 @@ export default function SignUp() {
     signIn("google", { callbackUrl: "/onboarding" });
   };
 
+  const handleYahooSignUp = () => {
+    // Note: Yahoo provider needs to be added to NextAuth config
+    // For demo purposes, we'll show an alert
+    alert("Yahoo authentication would be implemented in production");
+    // In production: signIn("yahoo", { callbackUrl: "/onboarding" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-50 dark:bg-neutral-900">
       <div className="max-w-md w-full mx-auto p-8">
@@ -103,13 +111,23 @@ export default function SignUp() {
             </div>
           )}
 
-          <button
-            onClick={handleGoogleSignUp}
-            className="w-full flex items-center justify-center gap-3 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-md py-2 px-4 text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary mb-4"
-          >
-            <FaGoogle className="text-red-500" />
-            Sign up with Google
-          </button>
+          <div className="space-y-3 mb-4">
+            <button
+              onClick={handleGoogleSignUp}
+              className="w-full flex items-center justify-center gap-3 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-md py-2 px-4 text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <FaGoogle className="text-red-500" />
+              Sign up with Google
+            </button>
+            
+            <button
+              onClick={handleYahooSignUp}
+              className="w-full flex items-center justify-center gap-3 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-md py-2 px-4 text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <SiYahoo className="text-purple-700" />
+              Sign up with Yahoo
+            </button>
+          </div>
 
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
