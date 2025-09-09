@@ -367,6 +367,17 @@ export default function Home() {
                   </motion.li>
                 </ul>
               </div>
+              <div>
+                <h4 className="text-lg font-bold mb-4 text-slate_blue-400">Platform Notes</h4>
+                <ul className="space-y-3">
+                  <motion.li whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 400 }}>
+                    <span className="text-slate_blue-600 dark:text-slate_blue-400">After assessment → sign up with Google, Yahoo, etc.</span>
+                  </motion.li>
+                  <motion.li whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 400 }}>
+                    <span className="text-slate_blue-600 dark:text-slate_blue-400">Mental Health Library moved to Freemium model</span>
+                  </motion.li>
+                </ul>
+              </div>
             </div>
           </motion.div>
           <motion.div 

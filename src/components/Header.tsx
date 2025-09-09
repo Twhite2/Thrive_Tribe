@@ -44,6 +44,9 @@ export default function Header({ showAuthButtons = true }: HeaderProps) {
           <Link href="/resources" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
             Resources
           </Link>
+          <Link href="/library" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
+            Mental Health Library
+          </Link>
           {isLoggedIn && isPremium && (
             <Link href="/premium" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">
               Premium
@@ -134,6 +137,13 @@ export default function Header({ showAuthButtons = true }: HeaderProps) {
               onClick={() => setMobileMenuOpen(false)}
             >
               Resources
+            </Link>
+            <Link 
+              href="/library" 
+              className="py-2 text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Mental Health Library
             </Link>
             {isLoggedIn && isPremium && (
               <Link 

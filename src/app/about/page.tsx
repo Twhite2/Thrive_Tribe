@@ -86,10 +86,7 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold mb-6 text-slate_blue-500">Mission Statement</h2>
               <div className="p-8 rounded-xl bg-gradient-to-br from-slate_blue-50 to-pale_purple-100 dark:from-slate_blue-300/20 dark:to-pale_purple-300/20 shadow-lg">
                 <p className="text-lg text-slate_blue-700 dark:text-slate_blue-400 leading-relaxed">
-                  To leverage our expertise in data analysis and emerging technologies to
-                  promote safe working environments, drive data-driven decision making, and
-                  innovate solutions that enhance efficiency and sustainability, specifically
-                  in the area of mental health.
+                  Our mission is to make mental health care accessible, affordable, and stigma-free by empowering individuals with simple digital tools, personalized strategies, and professional support to live healthier, balanced lives.
                 </p>
               </div>
             </motion.div>
