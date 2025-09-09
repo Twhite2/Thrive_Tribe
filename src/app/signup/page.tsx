@@ -4,8 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaGoogle } from "react-icons/fa";
-import { SiYahoo } from "react-icons/si";
+import { FaGoogle, FaYahoo } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 
 export default function SignUp() {
@@ -124,7 +123,7 @@ export default function SignUp() {
               onClick={handleYahooSignUp}
               className="w-full flex items-center justify-center gap-3 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-md py-2 px-4 text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              <SiYahoo className="text-purple-700" />
+              <FaYahoo className="text-purple-700" />
               Sign up with Yahoo
             </button>
           </div>
