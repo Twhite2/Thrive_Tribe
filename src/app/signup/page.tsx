@@ -83,11 +83,9 @@ export default function SignUp() {
     signIn("google", { callbackUrl: "/onboarding" });
   };
 
-  const handleYahooSignUp = () => {
-    // Note: Yahoo provider needs to be added to NextAuth config
-    // For demo purposes, we'll show an alert
-    alert("Yahoo authentication would be implemented in production");
-    // In production: signIn("yahoo", { callbackUrl: "/onboarding" });
+  const handleYahooSignUp = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.alert("Yahoo authentication would be implemented in production");
   };
 
   return (

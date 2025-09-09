@@ -42,11 +42,9 @@ export default function Login() {
     signIn("google", { callbackUrl: "/dashboard" });
   };
 
-  const handleYahooSignIn = () => {
-    // Note: Yahoo provider needs to be added to NextAuth config
-    // For demo purposes, we'll use credentials provider instead
-    alert("Yahoo authentication would be implemented in production");
-    // In production: signIn("yahoo", { callbackUrl: "/dashboard" });
+  const handleYahooSignIn = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.alert("Yahoo authentication would be implemented in production");
   };
 
   return (
