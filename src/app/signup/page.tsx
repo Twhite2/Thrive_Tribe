@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
 import { SiYahoo } from "react-icons/si";
 import { signIn } from "next-auth/react";
@@ -16,7 +16,19 @@ export default function SignUp() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fromAssessment, setFromAssessment] = useState(false);
+  
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  useEffect(() => {
+    // Check if user is coming from assessment
+    const from = searchParams.get('from');
+    const redirect = searchParams.get('redirect');
+    if (from === 'assessment') {
+      setFromAssessment(true);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,14 +77,26 @@ export default function SignUp() {
       }
 
       // Sign in the user after successful registration
-      await signIn("credentials", {
+      const signInResult = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
+      
+      if (signInResult?.error) {
+        throw new Error("Failed to sign in after registration");
+      }
 
-      // Redirect to onboarding
-      router.push("/onboarding");
+      // Check if the user just completed an assessment
+      const assessmentScore = localStorage.getItem('assessment_score');
+      
+      if (fromAssessment && assessmentScore) {
+        // Redirect to assessment results page
+        router.push(`/results?score=${assessmentScore}`);
+      } else {
+        // Regular redirect to onboarding
+        router.push("/onboarding");
+      }
     } catch (error: any) {
       setError(error.message || "Something went wrong. Please try again.");
     } finally {
@@ -81,14 +105,20 @@ export default function SignUp() {
   };
 
   const handleGoogleSignUp = () => {
-    signIn("google", { callbackUrl: "/onboarding" });
+    // Check if from assessment and set appropriate callback URL
+    const assessmentScore = localStorage.getItem('assessment_score');
+    const callbackUrl = (fromAssessment && assessmentScore) ? `/results?score=${assessmentScore}` : '/onboarding';
+    signIn("google", { callbackUrl });
   };
 
   const handleYahooSignUp = () => {
     // Note: Yahoo provider needs to be added to NextAuth config
     // For demo purposes, we'll show an alert
     alert("Yahoo authentication would be implemented in production");
-    // In production: signIn("yahoo", { callbackUrl: "/onboarding" });
+    // Check if from assessment
+    // const assessmentScore = localStorage.getItem('assessment_score');
+    // const callbackUrl = (fromAssessment && assessmentScore) ? `/results?score=${assessmentScore}` : '/onboarding';
+    // In production: signIn("yahoo", { callbackUrl });
   };
 
   return (
