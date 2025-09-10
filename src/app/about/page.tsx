@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Header from '@/components/Header';
 
 // Animation variants
 const fadeIn = {
@@ -24,35 +25,8 @@ const staggerChildren = {
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-pale_purple-500 dark:bg-slate_blue-100">
-      {/* Header */}
-      <header className="py-4 px-6 bg-white dark:bg-slate_blue-200 shadow-sm">
-        <div className="container-custom flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Link href="/">
-              <div className="flex items-center space-x-2">
-                <Image src="/images/logo.png" alt="Thrive Tribe Logo" width={40} height={40} className="rounded-md" />
-                <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-blend">Thrive Tribe</span>
-              </div>
-            </Link>
-          </div>
-          
-          <nav className="hidden md:flex space-x-8">
-            <Link href="/" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">Home</Link>
-            <Link href="/about" className="text-persian_pink-500 font-medium">About</Link>
-            <Link href="/assessment" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">Assessment</Link>
-            <Link href="/resources" className="text-slate_blue-400 hover:text-persian_pink-500 transition-colors duration-300">Resources</Link>
-          </nav>
-          
-          <div className="flex space-x-2">
-            <Link href="/login" className="py-2 px-4 rounded-full border border-slate_blue-400 text-slate_blue-400 hover:bg-slate_blue-50 transition-colors duration-300">
-              Log In
-            </Link>
-            <Link href="/signup" className="py-2 px-4 rounded-full bg-persian_pink-500 text-white hover:bg-persian_pink-400 transition-colors duration-300">
-              Sign Up
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Using the shared Header component */}
+      <Header />
 
       <main>
         {/* Hero Section */}

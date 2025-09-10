@@ -24,7 +24,7 @@ Thrive Tribe is a mental health and wellness application that helps users self-a
 - **Frontend**: Next.js, React, TypeScript
 - **Styling**: TailwindCSS
 - **Authentication**: NextAuth.js
-- **Database**: MongoDB (configured but using mock data in this version)
+- **Database**: PostgreSQL with Drizzle ORM
 - **Payment Processing**: Stripe integration
 - **Email Service**: Nodemailer (configured to work with any provider)
 - **Animation**: Framer Motion
@@ -34,6 +34,7 @@ Thrive Tribe is a mental health and wellness application that helps users self-a
 ### Prerequisites
 - Node.js 16.x or higher
 - npm or yarn
+- PostgreSQL 12.x or higher
 
 ### Installation
 
@@ -61,6 +62,9 @@ Thrive Tribe is a mental health and wellness application that helps users self-a
    GOOGLE_CLIENT_ID=your_google_client_id
    GOOGLE_CLIENT_SECRET=your_google_client_secret
 
+   # Database Connection
+   DATABASE_URL=postgres://username:password@localhost:5432/thrive_tribe
+
    # Email Service
    EMAIL_HOST=smtp.example.com
    EMAIL_PORT=587
@@ -73,7 +77,17 @@ Thrive Tribe is a mental health and wellness application that helps users self-a
    STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
    ```
 
-4. Run the development server
+4. Set up the database
+   
+   First, make sure PostgreSQL is installed and running on your system. Then initialize the database and run migrations:
+   
+   ```
+   npm run db:init
+   ```
+   
+   This script will create the database if it doesn't exist and run the necessary migrations to set up all tables.
+
+5. Run the development server
    ```
    npm run dev
    # or

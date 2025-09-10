@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Header from "@/components/Header";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Perceived Stress Scale questions
 const questions = [
@@ -114,12 +115,16 @@ const getScoreInterpretation = (score: number) => {
 
 export default function Assessment() {
   const router = useRouter();
+  const { session } = useAuth();
+  const isLoggedIn = !!session?.user;
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(null));
   const [assessmentComplete, setAssessmentComplete] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
+  // No need for redirect state as we handle it in calculation
 
   const handleAnswer = (value: number) => {
     const newAnswers = [...answers];
@@ -151,6 +156,7 @@ export default function Assessment() {
   const calculateResults = () => {
     setIsLoading(true);
 
+    // Calculate score regardless of login state
     setTimeout(() => {
       let totalScore = 0;
       
@@ -164,19 +170,28 @@ export default function Assessment() {
         }
       });
 
-      setScore(totalScore);
-      setAssessmentComplete(true);
-      setIsLoading(false);
+      // Save score to localStorage for retrieval after login/signup
+      localStorage.setItem('assessment_score', totalScore.toString());
+      
+      // Check login status
+      if (!isLoggedIn) {
+        // If not logged in, redirect to signup
+        setIsLoading(false);
+        router.push('/signup?from=assessment&redirect=results');
+      } else {
+        // If logged in, show results
+        setScore(totalScore);
+        setAssessmentComplete(true);
+        setIsLoading(false);
+      }
     }, 1500); // Simulate API call
   };
 
   const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
 
   const handleViewRecommendations = () => {
-    // In a real app, you would save the score to the database
-    localStorage.setItem('assessment_score', score?.toString() || '0');
-    
-    // Navigate to recommendations
+    // Navigate to recommendations - this should only be accessible if user is logged in
+    // because we're redirecting non-logged in users during the calculation phase
     router.push('/recommendations');
   };
 
@@ -457,6 +472,8 @@ export default function Assessment() {
                       </svg>
                     </motion.button>
                   </div>
+                  
+                  {/* Removed redirect notification as we redirect earlier in the flow */}
                   
                   {/* Footer space if needed in the future */}
                   <div className="mt-8"></div>
