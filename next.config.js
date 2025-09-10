@@ -1,3 +1,6 @@
+// Increase EventEmitter max listeners to prevent warnings with Google Fonts
+require('events').EventEmitter.defaultMaxListeners = 20;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

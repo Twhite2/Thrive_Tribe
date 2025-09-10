@@ -309,7 +309,7 @@ export default function Assessment() {
                     <div className="flex items-center">
                       <div className={`w-6 h-6 rounded-full mr-3 flex items-center justify-center ${answers[currentQuestion] === option.value 
                         ? "bg-persian_pink-400 dark:bg-persian_pink-500 text-white" 
-                        : "bg-slate_blue-100 dark:bg-slate_blue-400/30 text-slate_blue-400 dark:text-slate_blue-200"}
+                        : "bg-slate_blue-50 dark:bg-slate_blue-400/30 text-slate_blue-500 dark:text-slate_blue-200 border border-slate_blue-200 dark:border-transparent"}
                       `}>
                         {option.value}
                       </div>
@@ -328,8 +328,8 @@ export default function Assessment() {
                 disabled={currentQuestion === 0}
                 className={`flex items-center py-3 px-6 rounded-full shadow transition-all duration-300 ${
                   currentQuestion === 0
-                    ? "bg-slate_blue-100 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
-                    : "bg-white dark:bg-slate_blue-300 text-slate_blue-500 dark:text-slate_blue-100 border border-slate_blue-300 dark:border-slate_blue-400 hover:bg-slate_blue-50 dark:hover:bg-slate_blue-400"
+                    ? "bg-slate_blue-50 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
+                    : "bg-white dark:bg-slate_blue-300 text-slate_blue-600 dark:text-slate_blue-100 border border-slate_blue-200 dark:border-slate_blue-400 hover:bg-slate_blue-50 dark:hover:bg-slate_blue-400"
                 }`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -345,7 +345,7 @@ export default function Assessment() {
                 disabled={answers[currentQuestion] === null}
                 className={`flex items-center py-3 px-6 rounded-full shadow transition-all duration-300 ${
                   answers[currentQuestion] === null
-                    ? "bg-slate_blue-100 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
+                    ? "bg-slate_blue-50 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
                     : "bg-persian_pink-500 hover:bg-persian_pink-600 text-white"
                 }`}
               >

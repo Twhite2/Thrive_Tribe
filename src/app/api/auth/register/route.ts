@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs';
 
 // In a Vercel serverless environment, in-memory storage doesn't persist between function calls
 // This is only for demo purposes - in production, use a real database
