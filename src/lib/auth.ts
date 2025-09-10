@@ -1,19 +1,31 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { compare } from "bcrypt";
+import { compare } from "bcryptjs";
+import PostgresAdapter from "@auth/pg-adapter";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
+import { schema } from "./db";
+import postgres from "postgres";
 
-// This would be replaced with actual DB logic in production
-const mockUsers = [
-  {
-    id: "1",
-    name: "Demo User",
-    email: "demo@thrivetribe.com",
-    password: "$2b$10$sMzJNEpz5xyD5/n8n9gTEuOt8CKnzzfQ7vghOQgYT1.YZQkhDqJEa", // hashed "password123"
-  },
-];
+// Create postgres client specifically for the Auth.js adapter
+const connectionString = process.env.DATABASE_URL;
+const client = postgres(connectionString || '');
+
+// User auth functions
+async function getUserByEmail(email: string) {
+  try {
+    const users = await db.select().from(schema.users).where(eq(schema.users.email, email));
+    return users[0] || null;
+  } catch (error) {
+    console.error("Error finding user by email:", error);
+    return null;
+  }
+}
 
 export const authOptions: NextAuthOptions = {
+  // Use PostgreSQL adapter
+  adapter: PostgresAdapter(client),
   providers: [
     // Only add Google provider if credentials are available
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
@@ -36,10 +48,10 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // In production, this would be replaced with a DB query
-        const user = mockUsers.find((user) => user.email === credentials.email);
+        // Get user from database
+        const user = await getUserByEmail(credentials.email);
 
-        if (!user) {
+        if (!user || !user.password) {
           return null;
         }
 
@@ -50,9 +62,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         return {
-          id: user.id,
+          id: user.id.toString(),
           name: user.name,
           email: user.email,
+          image: user.image,
         };
       },
     }),

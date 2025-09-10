@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Header from "@/components/Header";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Perceived Stress Scale questions
 const questions = [
@@ -114,12 +115,16 @@ const getScoreInterpretation = (score: number) => {
 
 export default function Assessment() {
   const router = useRouter();
+  const { session } = useAuth();
+  const isLoggedIn = !!session?.user;
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(null));
   const [assessmentComplete, setAssessmentComplete] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
+  // No need for redirect state as we handle it in calculation
 
   const handleAnswer = (value: number) => {
     const newAnswers = [...answers];
@@ -151,6 +156,7 @@ export default function Assessment() {
   const calculateResults = () => {
     setIsLoading(true);
 
+    // Calculate score regardless of login state
     setTimeout(() => {
       let totalScore = 0;
       
@@ -164,19 +170,28 @@ export default function Assessment() {
         }
       });
 
-      setScore(totalScore);
-      setAssessmentComplete(true);
-      setIsLoading(false);
+      // Save score to localStorage for retrieval after login/signup
+      localStorage.setItem('assessment_score', totalScore.toString());
+      
+      // Check login status
+      if (!isLoggedIn) {
+        // If not logged in, redirect to signup
+        setIsLoading(false);
+        router.push('/signup?from=assessment&redirect=results');
+      } else {
+        // If logged in, show results
+        setScore(totalScore);
+        setAssessmentComplete(true);
+        setIsLoading(false);
+      }
     }, 1500); // Simulate API call
   };
 
   const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
 
   const handleViewRecommendations = () => {
-    // In a real app, you would save the score to the database
-    localStorage.setItem('assessment_score', score?.toString() || '0');
-    
-    // Navigate to recommendations
+    // Navigate to recommendations - this should only be accessible if user is logged in
+    // because we're redirecting non-logged in users during the calculation phase
     router.push('/recommendations');
   };
 
@@ -309,7 +324,7 @@ export default function Assessment() {
                     <div className="flex items-center">
                       <div className={`w-6 h-6 rounded-full mr-3 flex items-center justify-center ${answers[currentQuestion] === option.value 
                         ? "bg-persian_pink-400 dark:bg-persian_pink-500 text-white" 
-                        : "bg-slate_blue-100 dark:bg-slate_blue-400/30 text-slate_blue-400 dark:text-slate_blue-200"}
+                        : "bg-slate_blue-50 dark:bg-slate_blue-400/30 text-slate_blue-500 dark:text-slate_blue-200 border border-slate_blue-200 dark:border-transparent"}
                       `}>
                         {option.value}
                       </div>
@@ -328,8 +343,8 @@ export default function Assessment() {
                 disabled={currentQuestion === 0}
                 className={`flex items-center py-3 px-6 rounded-full shadow transition-all duration-300 ${
                   currentQuestion === 0
-                    ? "bg-slate_blue-100 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
-                    : "bg-white dark:bg-slate_blue-300 text-slate_blue-500 dark:text-slate_blue-100 border border-slate_blue-300 dark:border-slate_blue-400 hover:bg-slate_blue-50 dark:hover:bg-slate_blue-400"
+                    ? "bg-slate_blue-50 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
+                    : "bg-white dark:bg-slate_blue-300 text-slate_blue-600 dark:text-slate_blue-100 border border-slate_blue-200 dark:border-slate_blue-400 hover:bg-slate_blue-50 dark:hover:bg-slate_blue-400"
                 }`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -345,7 +360,7 @@ export default function Assessment() {
                 disabled={answers[currentQuestion] === null}
                 className={`flex items-center py-3 px-6 rounded-full shadow transition-all duration-300 ${
                   answers[currentQuestion] === null
-                    ? "bg-slate_blue-100 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
+                    ? "bg-slate_blue-50 dark:bg-slate_blue-300/20 text-slate_blue-300 dark:text-slate_blue-400 cursor-not-allowed"
                     : "bg-persian_pink-500 hover:bg-persian_pink-600 text-white"
                 }`}
               >
@@ -457,6 +472,8 @@ export default function Assessment() {
                       </svg>
                     </motion.button>
                   </div>
+                  
+                  {/* Removed redirect notification as we redirect earlier in the flow */}
                   
                   {/* Footer space if needed in the future */}
                   <div className="mt-8"></div>

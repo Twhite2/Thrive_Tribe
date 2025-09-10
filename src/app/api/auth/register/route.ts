@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { hash } from 'bcrypt';
-
-// In a Vercel serverless environment, in-memory storage doesn't persist between function calls
-// This is only for demo purposes - in production, use a real database
-// We'll simulate success for the demo but note this won't actually store users
+import { createUser } from '@/lib/db/repositories/userRepository';
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,34 +21,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // In a real app, you would check if the user exists in the database
-    // For demo purposes, we'll assume the user doesn't exist
-    // If this was a production app with a real database, you'd do something like:
-    // const existingUser = await db.users.findOne({ email });
-    // if (existingUser) { return error response... }
+    // Create user in database
+    const newUser = await createUser({ name, email, password });
 
-    // Hash password
-    const hashedPassword = await hash(password, 10);
+    if (!newUser) {
+      return NextResponse.json(
+        { message: "User already exists with this email" },
+        { status: 409 }
+      );
+    }
 
-    // In a real app, save to database
-    // For demo, just store in memory
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      password: hashedPassword,
-      createdAt: new Date(),
-      isPremium: false
-    };
-
-    // In a real app: await db.users.insert(newUser);
-    // For the demo, we don't need to store anything since this is serverless
-
-    // Return success but exclude password
-    const { password: _, ...userWithoutPassword } = newUser;
-    
+    // Return success with user data
     return NextResponse.json(
-      { message: "User registered successfully", user: userWithoutPassword },
+      { message: "User registered successfully", user: newUser },
       { status: 201 }
     );
     
